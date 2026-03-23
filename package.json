@@ -1,0 +1,13 @@
+{
+  "name": "com.ajeitese.playfab",
+  "version": "0.1.0",
+  "displayName": "PlayFab",
+  "description": "Authorization abstraction layer with PlayFab implementation. Provides IAuthService interface for easy provider swapping.",
+  "unity": "6000.4",
+  "dependencies": {
+    "com.ajeitese.gamebackend": "0.1.0"
+  },
+  "author": {
+    "name": "Victor"
+  }
+}
