@@ -1,21 +1,43 @@
-#if UNITY_2017_1_OR_NEWER
-using PlayFab.PfEditor;
 using UnityEditor;
 using UnityEngine;
 
-public class MakeScriptableObject
+namespace PlayFab.PfEditor
 {
-    [MenuItem("PlayFab/MakePlayFabSharedSettings")]
-    public static void MakePlayFabSharedSettings()
+    [InitializeOnLoad]
+    public static class PlayFabResourceInstaller
     {
-        PlayFabSharedSettings asset = ScriptableObject.CreateInstance<PlayFabSharedSettings>();
+        private const string ResourcesPath = "Assets/Resources";
+        private const string PlayFabPath = ResourcesPath + "/PlayFab";
+        private const string AssetPath = PlayFabPath + "/PlayFabSharedSettings.asset";
 
-        AssetDatabase.CreateAsset(asset, "Assets/PlayFabSdk/Shared/Public/Resources/PlayFabSharedSettings.asset"); // TODO: Path should not be hard coded
-        AssetDatabase.SaveAssets();
+        static PlayFabResourceInstaller()
+        {
+            EnsureSharedSettingsExists();
+        }
 
-        EditorUtility.FocusProjectWindow();
+        [MenuItem("PlayFab/Create Shared Settings")]
+        public static void EnsureSharedSettingsExists()
+        {
+            var guids = AssetDatabase.FindAssets("t:PlayFabSharedSettings", new[] { "Assets" });
+            if (guids.Length > 0)
+            {
+                return;
+            }
 
-        Selection.activeObject = asset;
+            if (!AssetDatabase.IsValidFolder(ResourcesPath))
+            {
+                AssetDatabase.CreateFolder("Assets", "Resources");
+            }
+
+            if (!AssetDatabase.IsValidFolder(PlayFabPath))
+            {
+                AssetDatabase.CreateFolder(ResourcesPath, "PlayFab");
+            }
+
+            var asset = ScriptableObject.CreateInstance<PlayFabSharedSettings>();
+            AssetDatabase.CreateAsset(asset, AssetPath);
+            AssetDatabase.SaveAssets();
+            Debug.Log("PlayFab: Created PlayFabSharedSettings at " + AssetPath);
+        }
     }
 }
-#endif

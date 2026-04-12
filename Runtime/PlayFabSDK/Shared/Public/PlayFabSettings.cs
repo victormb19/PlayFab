@@ -75,7 +75,7 @@ namespace PlayFab
 
         private static PlayFabSharedSettings GetSharedSettingsObjectPrivate()
         {
-            var settingsList = Resources.LoadAll<PlayFabSharedSettings>("PlayFabSharedSettings");
+            var settingsList = Resources.LoadAll<PlayFabSharedSettings>("PlayFab/PlayFabSharedSettings");
             if (settingsList.Length != 1)
             {
                 Debug.LogWarning("The number of PlayFabSharedSettings objects should be 1: " + settingsList.Length);

@@ -4,6 +4,8 @@ using NSubstitute;
 using NUnit.Framework;
 using PlayFab.Auth;
 using PlayFab.ClientModels;
+using UnityEngine;
+using UnityEngine.TestTools;
 
 namespace PlayFab.Tests
 {
@@ -66,6 +68,7 @@ namespace PlayFab.Tests
         public void Return_Failed_When_Login_With_Device_Id_Fails()
         {
             SetupLoginWithCustomIdFailure("Service unavailable");
+            LogAssert.Expect(LogType.Error, "[PlayFabAuthService] Login FAILED. Error=Service unavailable");
 
             var received = false;
             var result = default(AuthResult);
