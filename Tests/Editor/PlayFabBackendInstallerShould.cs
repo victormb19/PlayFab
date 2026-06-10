@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using PlayFab.Auth;
-using UnityEngine;
+using PlayFab.Friends;
 
 namespace PlayFab.Tests
 {
@@ -12,13 +12,7 @@ namespace PlayFab.Tests
         [SetUp]
         public void SetUp()
         {
-            installer = ScriptableObject.CreateInstance<PlayFabBackendInstaller>();
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            Object.DestroyImmediate(installer);
+            installer = new PlayFabBackendInstaller();
         }
 
         [Test]
@@ -35,6 +29,22 @@ namespace PlayFab.Tests
             var authService = installer.CreateAuthService();
 
             Assert.That(authService, Is.TypeOf<PlayFabAuthService>());
+        }
+
+        [Test]
+        public void Create_Friends_Service_Not_Null()
+        {
+            var friendsService = installer.CreateFriendsService();
+
+            Assert.That(friendsService, Is.Not.Null);
+        }
+
+        [Test]
+        public void Create_Friends_Service_Of_Correct_Type()
+        {
+            var friendsService = installer.CreateFriendsService();
+
+            Assert.That(friendsService, Is.TypeOf<PlayFabFriendsService>());
         }
     }
 }
