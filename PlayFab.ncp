@@ -1,0 +1,323 @@
+<Project>
+  <Name>PlayFab Backend</Name>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>Model</Name>
+    <Language>CSharp</Language>
+    <Entities>
+      <Entity type="Class">
+        <Name>BackendInstaller</Name>
+        <Access>Public</Access>
+        <Member type="Method">public abstract IAuthService CreateAuthService()</Member>
+        <Member type="Method">public abstract IFriendsService CreateFriendsService()</Member>
+        <Modifier>Abstract</Modifier>
+        <Location left="70" top="86" />
+        <Size width="298" height="110" />
+        <Collapsed>False</Collapsed>
+      </Entity>
+      <Entity type="Interface">
+        <Name>IAuthService</Name>
+        <Access>Public</Access>
+        <Member type="Property">bool IsLoggedIn { get; }</Member>
+        <Member type="Method">void LoginWithDeviceId(string deviceId, Action&lt;AuthResult&gt; onComplete)</Member>
+        <Member type="Method">void LoginWithCredentials(string username, string password, Action&lt;AuthResult&gt; onComplete)</Member>
+        <Member type="Method">void Logout()</Member>
+        <Location left="438" top="132" />
+        <Size width="478" height="150" />
+        <Collapsed>False</Collapsed>
+      </Entity>
+      <Entity type="Interface">
+        <Name>IFriendsService</Name>
+        <Access>Public</Access>
+        <Member type="Method">void RegisterObserver(IFriendsServiceObserver observer)</Member>
+        <Member type="Method">void UnregisterObserver(IFriendsServiceObserver observer)</Member>
+        <Member type="Method">void LoadFriends()</Member>
+        <Member type="Method">void AddFriendByDisplayName(string displayName)</Member>
+        <Member type="Method">void RemoveFriend(string friendId)</Member>
+        <Location left="100" top="458" />
+        <Size width="313" height="170" />
+        <Collapsed>False</Collapsed>
+      </Entity>
+      <Entity type="Interface">
+        <Name>IFriendsServiceObserver</Name>
+        <Access>Public</Access>
+        <Member type="Method">void OnFriendsLoaded(FriendsResult result)</Member>
+        <Member type="Method">void OnFriendAdded(FriendOperationResult result)</Member>
+        <Member type="Method">void OnFriendRemoved(FriendOperationResult result)</Member>
+        <Location left="453" top="458" />
+        <Size width="278" height="130" />
+        <Collapsed>False</Collapsed>
+      </Entity>
+      <Entity type="Class">
+        <Name>AuthResult</Name>
+        <Access>Public</Access>
+        <Member type="Property">public bool Success { get; }</Member>
+        <Member type="Property">public string PlayerId { get; }</Member>
+        <Member type="Property">public string SessionToken { get; }</Member>
+        <Member type="Property">public bool IsNewAccount { get; }</Member>
+        <Member type="Property">public string ErrorMessage { get; }</Member>
+        <Member type="Method">public static AuthResult Succeeded(string playerId, string sessionToken, bool isNewAccount)</Member>
+        <Member type="Method">public static AuthResult Failed(string errorMessage)</Member>
+        <Modifier>None</Modifier>
+        <Location left="956" top="132" />
+        <Size width="483" height="210" />
+        <Collapsed>False</Collapsed>
+      </Entity>
+      <Entity type="Class">
+        <Name>FriendsResult</Name>
+        <Access>Public</Access>
+        <Member type="Property">public bool Success { get; }</Member>
+        <Member type="Property">public IReadOnlyList&lt;FriendData&gt; Friends { get; }</Member>
+        <Member type="Property">public string ErrorMessage { get; }</Member>
+        <Member type="Method">public static FriendsResult Succeeded(IReadOnlyList&lt;FriendData&gt; friends)</Member>
+        <Member type="Method">public static FriendsResult Failed(string errorMessage)</Member>
+        <Modifier>None</Modifier>
+        <Location left="771" top="458" />
+        <Size width="388" height="170" />
+        <Collapsed>False</Collapsed>
+      </Entity>
+      <Entity type="Class">
+        <Name>FriendOperationResult</Name>
+        <Access>Public</Access>
+        <Member type="Property">public bool Success { get; }</Member>
+        <Member type="Property">public string ErrorMessage { get; }</Member>
+        <Member type="Method">public static FriendOperationResult Succeeded()</Member>
+        <Member type="Method">public static FriendOperationResult Failed(string errorMessage)</Member>
+        <Modifier>None</Modifier>
+        <Location left="1199" top="458" />
+        <Size width="343" height="150" />
+        <Collapsed>False</Collapsed>
+      </Entity>
+      <Entity type="Class">
+        <Name>FriendData</Name>
+        <Access>Public</Access>
+        <Member type="Property">public string Id { get; }</Member>
+        <Member type="Property">public string DisplayName { get; }</Member>
+        <Member type="Constructor">public FriendData(string id, string displayName)</Member>
+        <Modifier>None</Modifier>
+        <Location left="100" top="668" />
+        <Size width="268" height="130" />
+        <Collapsed>False</Collapsed>
+      </Entity>
+      <Entity type="Class">
+        <Name>PlayFabBackendInstaller</Name>
+        <Access>Public</Access>
+        <Member type="Method">public override IAuthService CreateAuthService()</Member>
+        <Member type="Method">public override IFriendsService CreateFriendsService()</Member>
+        <Modifier>None</Modifier>
+        <Location left="70" top="984" />
+        <Size width="298" height="110" />
+        <Collapsed>False</Collapsed>
+      </Entity>
+      <Entity type="Class">
+        <Name>PlayFabAuthService</Name>
+        <Access>Public</Access>
+        <Member type="Field">private readonly IPlayFabClientApi playFabClientApi</Member>
+        <Member type="Property">public bool IsLoggedIn { get; }</Member>
+        <Member type="Constructor">public PlayFabAuthService(IPlayFabClientApi playFabClientApi)</Member>
+        <Member type="Method">public void LoginWithDeviceId(string deviceId, Action&lt;AuthResult&gt; onComplete)</Member>
+        <Member type="Method">public void LoginWithCredentials(string username, string password, Action&lt;AuthResult&gt; onComplete)</Member>
+        <Member type="Method">public void Logout()</Member>
+        <Modifier>None</Modifier>
+        <Location left="100" top="1180" />
+        <Size width="513" height="190" />
+        <Collapsed>False</Collapsed>
+      </Entity>
+      <Entity type="Interface">
+        <Name>IPlayFabClientApi</Name>
+        <Access>Public</Access>
+        <Member type="Method">void LoginWithCustomID(LoginWithCustomIDRequest request, Action&lt;LoginResult&gt; onSuccess, Action&lt;PlayFabError&gt; onError)</Member>
+        <Member type="Method">void LoginWithPlayFab(LoginWithPlayFabRequest request, Action&lt;LoginResult&gt; onSuccess, Action&lt;PlayFabError&gt; onError)</Member>
+        <Member type="Method">bool IsClientLoggedIn()</Member>
+        <Member type="Method">void ForgetAllCredentials()</Member>
+        <Location left="653" top="1180" />
+        <Size width="613" height="150" />
+        <Collapsed>False</Collapsed>
+      </Entity>
+      <Entity type="Class">
+        <Name>PlayFabClientApiAdapter</Name>
+        <Access>Public</Access>
+        <Member type="Method">public void LoginWithCustomID(LoginWithCustomIDRequest request, Action&lt;LoginResult&gt; onSuccess, Action&lt;PlayFabError&gt; onError)</Member>
+        <Member type="Method">public void LoginWithPlayFab(LoginWithPlayFabRequest request, Action&lt;LoginResult&gt; onSuccess, Action&lt;PlayFabError&gt; onError)</Member>
+        <Member type="Method">public bool IsClientLoggedIn()</Member>
+        <Member type="Method">public void ForgetAllCredentials()</Member>
+        <Modifier>None</Modifier>
+        <Location left="100" top="1410" />
+        <Size width="640" height="150" />
+        <Collapsed>False</Collapsed>
+      </Entity>
+      <Entity type="Class">
+        <Name>FriendsServiceObservable</Name>
+        <Access>Public</Access>
+        <Member type="Field">private readonly List&lt;IFriendsServiceObserver&gt; observers</Member>
+        <Member type="Method">public void RegisterObserver(IFriendsServiceObserver observer)</Member>
+        <Member type="Method">public void UnregisterObserver(IFriendsServiceObserver observer)</Member>
+        <Member type="Method">protected void NotifyFriendsLoaded(FriendsResult result)</Member>
+        <Member type="Method">protected void NotifyFriendAdded(FriendOperationResult result)</Member>
+        <Member type="Method">protected void NotifyFriendRemoved(FriendOperationResult result)</Member>
+        <Modifier>Abstract</Modifier>
+        <Location left="100" top="1676" />
+        <Size width="348" height="190" />
+        <Collapsed>False</Collapsed>
+      </Entity>
+      <Entity type="Class">
+        <Name>PlayFabFriendsService</Name>
+        <Access>Public</Access>
+        <Member type="Field">private readonly IPlayFabFriendsApi friendsApi</Member>
+        <Member type="Constructor">public PlayFabFriendsService(IPlayFabFriendsApi friendsApi)</Member>
+        <Member type="Method">public void LoadFriends()</Member>
+        <Member type="Method">public void AddFriendByDisplayName(string displayName)</Member>
+        <Member type="Method">public void RemoveFriend(string friendId)</Member>
+        <Member type="Method">private void SendAddFriendRequest(string displayName)</Member>
+        <Member type="Method">private void SendRemoveFriendRequest(string friendId)</Member>
+        <Member type="Method">private static IReadOnlyList&lt;FriendData&gt; Map(List&lt;FriendInfo&gt; friends)</Member>
+        <Modifier>None</Modifier>
+        <Location left="488" top="1676" />
+        <Size width="378" height="230" />
+        <Collapsed>False</Collapsed>
+      </Entity>
+      <Entity type="Interface">
+        <Name>IPlayFabFriendsApi</Name>
+        <Access>Public</Access>
+        <Member type="Method">void AddFriend(AddFriendRequest request, Action&lt;AddFriendResult&gt; onSuccess, Action&lt;PlayFabError&gt; onError)</Member>
+        <Member type="Method">void GetFriendsList(GetFriendsListRequest request, Action&lt;GetFriendsListResult&gt; onSuccess, Action&lt;PlayFabError&gt; onError)</Member>
+        <Member type="Method">void RemoveFriend(RemoveFriendRequest request, Action&lt;RemoveFriendResult&gt; onSuccess, Action&lt;PlayFabError&gt; onError)</Member>
+        <Location left="906" top="1676" />
+        <Size width="628" height="130" />
+        <Collapsed>False</Collapsed>
+      </Entity>
+      <Entity type="Class">
+        <Name>PlayFabFriendsApiAdapter</Name>
+        <Access>Public</Access>
+        <Member type="Method">public void AddFriend(AddFriendRequest request, Action&lt;AddFriendResult&gt; onSuccess, Action&lt;PlayFabError&gt; onError)</Member>
+        <Member type="Method">public void GetFriendsList(GetFriendsListRequest request, Action&lt;GetFriendsListResult&gt; onSuccess, Action&lt;PlayFabError&gt; onError)</Member>
+        <Member type="Method">public void RemoveFriend(RemoveFriendRequest request, Action&lt;RemoveFriendResult&gt; onSuccess, Action&lt;PlayFabError&gt; onError)</Member>
+        <Modifier>None</Modifier>
+        <Location left="100" top="1946" />
+        <Size width="640" height="130" />
+        <Collapsed>False</Collapsed>
+      </Entity>
+      <Entity type="Namespace">
+        <Name>GameBackEnd</Name>
+        <Location left="40" top="40" />
+        <Size width="1562" height="818" />
+        <Collapsed>False</Collapsed>
+      </Entity>
+      <Entity type="Namespace">
+        <Name>Auth</Name>
+        <Location left="408" top="86" />
+        <Size width="1061" height="286" />
+        <Collapsed>False</Collapsed>
+      </Entity>
+      <Entity type="Namespace">
+        <Name>Friends</Name>
+        <Location left="70" top="412" />
+        <Size width="1502" height="416" />
+        <Collapsed>False</Collapsed>
+      </Entity>
+      <Entity type="Namespace">
+        <Name>PlayFab</Name>
+        <Location left="40" top="938" />
+        <Size width="1554" height="1198" />
+        <Collapsed>False</Collapsed>
+      </Entity>
+      <Entity type="Namespace">
+        <Name>Auth</Name>
+        <Location left="70" top="1134" />
+        <Size width="1226" height="456" />
+        <Collapsed>False</Collapsed>
+      </Entity>
+      <Entity type="Namespace">
+        <Name>Friends</Name>
+        <Location left="70" top="1630" />
+        <Size width="1494" height="476" />
+        <Collapsed>False</Collapsed>
+      </Entity>
+    </Entities>
+    <Containers>
+      <Container entityIndex="16">
+        <ChildEntity>0</ChildEntity>
+        <ChildEntity>17</ChildEntity>
+        <ChildEntity>18</ChildEntity>
+      </Container>
+      <Container entityIndex="17">
+        <ChildEntity>1</ChildEntity>
+        <ChildEntity>4</ChildEntity>
+      </Container>
+      <Container entityIndex="18">
+        <ChildEntity>2</ChildEntity>
+        <ChildEntity>3</ChildEntity>
+        <ChildEntity>5</ChildEntity>
+        <ChildEntity>6</ChildEntity>
+        <ChildEntity>7</ChildEntity>
+      </Container>
+      <Container entityIndex="19">
+        <ChildEntity>8</ChildEntity>
+        <ChildEntity>20</ChildEntity>
+        <ChildEntity>21</ChildEntity>
+      </Container>
+      <Container entityIndex="20">
+        <ChildEntity>9</ChildEntity>
+        <ChildEntity>10</ChildEntity>
+        <ChildEntity>11</ChildEntity>
+      </Container>
+      <Container entityIndex="21">
+        <ChildEntity>12</ChildEntity>
+        <ChildEntity>13</ChildEntity>
+        <ChildEntity>14</ChildEntity>
+        <ChildEntity>15</ChildEntity>
+      </Container>
+    </Containers>
+    <Relationships>
+      <Relationship type="Generalization" first="8" second="0" />
+      <Relationship type="Generalization" first="13" second="12" />
+      <Relationship type="Realization" first="9" second="1" />
+      <Relationship type="Realization" first="13" second="2" />
+      <Relationship type="Realization" first="11" second="10" />
+      <Relationship type="Realization" first="15" second="14" />
+      <Relationship type="Association" first="9" second="10">
+        <Label />
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Aggregation</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="13" second="14">
+        <Label />
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Aggregation</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="12" second="3">
+        <Label />
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Aggregation</AssociationType>
+      </Relationship>
+      <Relationship type="Dependency" first="8" second="9">
+        <Label />
+      </Relationship>
+      <Relationship type="Dependency" first="8" second="11">
+        <Label />
+      </Relationship>
+      <Relationship type="Dependency" first="8" second="13">
+        <Label />
+      </Relationship>
+      <Relationship type="Dependency" first="8" second="15">
+        <Label />
+      </Relationship>
+      <Relationship type="Dependency" first="9" second="4">
+        <Label />
+      </Relationship>
+      <Relationship type="Dependency" first="13" second="5">
+        <Label />
+      </Relationship>
+      <Relationship type="Dependency" first="13" second="6">
+        <Label />
+      </Relationship>
+      <Relationship type="Dependency" first="13" second="7">
+        <Label />
+      </Relationship>
+      <Relationship type="Association" first="5" second="7">
+        <Label />
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Aggregation</AssociationType>
+      </Relationship>
+    </Relationships>
+  </ProjectItem>
+</Project>
