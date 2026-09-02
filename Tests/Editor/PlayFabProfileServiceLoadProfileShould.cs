@@ -101,6 +101,20 @@ namespace PlayFab.Tests
                 .Do(c => c.Arg<Action<GetUserDataResult>>().Invoke(new GetUserDataResult()));
         }
 
+        [Test]
+        public void Hand_The_Loaded_Profile_To_An_Observer_That_Arrives_Late()
+        {
+            SetupAccountInfo("player-001", "Vic");
+            SetupUserData("avatar_07");
+            profileService.LoadProfile();
+            var lateObserver = Substitute.For<IProfileServiceObserver>();
+
+            profileService.RegisterObserver(lateObserver);
+
+            lateObserver.Received(1).OnProfileLoaded(Arg.Is<ProfileResult>(result =>
+                result.Success && result.Profile.DisplayName == "Vic"));
+        }
+
         private void SetupAccountInfo(string playFabId, string displayName)
         {
             api.When(x => x.GetAccountInfo(

@@ -7,6 +7,8 @@ namespace PlayFab.Profile
     {
         private readonly List<IProfileServiceObserver> observers = new List<IProfileServiceObserver>();
 
+        private ProfileResult lastProfile;
+
         public void RegisterObserver(IProfileServiceObserver observer)
         {
             if (observers.Contains(observer))
@@ -15,6 +17,13 @@ namespace PlayFab.Profile
             }
 
             observers.Add(observer);
+
+            // El login es asincrono: quien se registra despues de la carga
+            // seguiria esperando un aviso que ya paso.
+            if (lastProfile != null)
+            {
+                observer.OnProfileLoaded(lastProfile);
+            }
         }
 
         public void UnregisterObserver(IProfileServiceObserver observer)
@@ -24,6 +33,8 @@ namespace PlayFab.Profile
 
         protected void NotifyProfileLoaded(ProfileResult result)
         {
+            lastProfile = result;
+
             foreach (var observer in observers)
             {
                 observer.OnProfileLoaded(result);
