@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using PlayFab.Auth;
 using PlayFab.Friends;
+using PlayFab.Profile;
 
 namespace PlayFab.Tests
 {
@@ -45,6 +46,14 @@ namespace PlayFab.Tests
             var friendsService = installer.CreateFriendsService();
 
             Assert.That(friendsService, Is.TypeOf<PlayFabFriendsService>());
+        }
+
+        [Test]
+        public void Create_Profile_Service_Of_Correct_Type()
+        {
+            var profileService = installer.CreateProfileService();
+
+            Assert.That(profileService, Is.TypeOf<PlayFabProfileService>());
         }
     }
 }

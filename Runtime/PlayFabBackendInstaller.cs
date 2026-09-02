@@ -1,8 +1,10 @@
 using GameBackEnd;
 using GameBackEnd.Auth;
 using GameBackEnd.Friends;
+using GameBackEnd.Profile;
 using PlayFab.Auth;
 using PlayFab.Friends;
+using PlayFab.Profile;
 
 namespace PlayFab
 {
@@ -18,6 +20,12 @@ namespace PlayFab
         {
             var api = new PlayFabFriendsApiAdapter();
             return new PlayFabFriendsService(api);
+        }
+
+        public override IProfileService CreateProfileService()
+        {
+            var api = new PlayFabProfileApiAdapter();
+            return new PlayFabProfileService(api);
         }
     }
 }
