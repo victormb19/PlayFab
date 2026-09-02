@@ -1,7 +1,6 @@
 using System;
 using GameBackEnd.Auth;
 using PlayFab.ClientModels;
-using UnityEngine;
 
 namespace PlayFab.Auth
 {
@@ -30,20 +29,11 @@ namespace PlayFab.Auth
                 CreateAccount = true
             };
 
-            Debug.Log($"[PlayFabAuthService] Calling LoginWithCustomID. CustomId={request.CustomId}");
             playFabClientApi.LoginWithCustomID(request,
-                result =>
-                {
-                    Debug.Log($"[PlayFabAuthService] Login SUCCESS. PlayFabId={result.PlayFabId}");
-                    onComplete?.Invoke(
-                        AuthResult.Succeeded(result.PlayFabId, result.SessionTicket, result.NewlyCreated));
-                },
-                error =>
-                {
-                    Debug.LogError($"[PlayFabAuthService] Login FAILED. Error={error.ErrorMessage}");
-                    onComplete?.Invoke(
-                        AuthResult.Failed(error.ErrorMessage));
-                }
+                result => onComplete?.Invoke(
+                    AuthResult.Succeeded(result.PlayFabId, result.SessionTicket, result.NewlyCreated)),
+                error => onComplete?.Invoke(
+                    AuthResult.Failed(error.ErrorMessage))
             );
         }
 
