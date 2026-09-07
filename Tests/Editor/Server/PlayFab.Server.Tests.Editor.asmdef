@@ -1,0 +1,29 @@
+{
+    "name": "PlayFab.Server.Tests.Editor",
+    "rootNamespace": "PlayFab.Server.Tests",
+    "references": [
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner",
+        "PlayFab",
+        "PlayFab.Server",
+        "GameBackEnd"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll",
+        "NSubstitute.dll",
+        "Castle.Core.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS",
+        "ENABLE_PLAYFABSERVER_API"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

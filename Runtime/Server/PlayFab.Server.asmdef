@@ -1,0 +1,19 @@
+{
+    "name": "PlayFab.Server",
+    "rootNamespace": "PlayFab.Server",
+    "references": [
+        "PlayFab",
+        "GameBackEnd"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "ENABLE_PLAYFABSERVER_API"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
